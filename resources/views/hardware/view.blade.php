@@ -243,8 +243,12 @@
                                             <div class="col-md-2">
                                                 <strong>{{ trans('admin/hardware/form.serial') }}</strong>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 {{ $asset->serial  }}
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <a href="{{ config('services.search_urls.jamf') }}/computers.html?queryType=COMPUTERS&query={{ $asset->serial }}" target="_blank">Search Jamf</a> |
+                                                <a href="{{ config('services.search_urls.box') }}/folder/0/search?types=pdf&query={{ $asset->serial }}%20OR%20S{{ $asset->serial }}" target="_blank">Search Box</a>
                                             </div>
                                         </div>
                                     @endif

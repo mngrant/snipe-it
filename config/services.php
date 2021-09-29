@@ -49,10 +49,13 @@ return [
         'app_key'  => env('STUNNING_APP_KEY'),
         'stripe_id'    => env('STUNNING_STRIPE_ID'),
     ],
-    
+
     'google' => [
         'maps_api_key' => env('GOOGLE_MAPS_API')
     ],
 
-
+    'search_urls' => [
+        'jamf' => env('JAMF_SEARCH_URL'),
+        'box' => env('BOX_SEARCH_URL')
+    ]
 ];
