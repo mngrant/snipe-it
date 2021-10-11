@@ -116,7 +116,7 @@ class AssetsTransformer
         $permissions_array['available_actions'] = [
             'checkout' => Gate::allows('checkout', Asset::class),
             'checkin' => Gate::allows('checkin', Asset::class),
-            'clone' => Gate::allows('create', Asset::class),
+            'clone' => false,
             'restore' => false,
             'update' => (bool) Gate::allows('update', Asset::class),
             'delete' => ($asset->assigned_to=='' && Gate::allows('delete', Asset::class)),
@@ -142,14 +142,15 @@ class AssetsTransformer
     
                 foreach ($asset->components as $component) {
                     $array['components'][] = [
-                        [
+                        
                             'id' => $component->id,
+                            'pivot_id' => $component->pivot->id,
                             'name' => $component->name,
                             'qty' => $component->pivot->assigned_qty,
                             'price_cost' => $component->purchase_cost,
                             'purchase_total' => $component->purchase_cost * $component->pivot->assigned_qty,
                             'checkout_date' => Helper::getFormattedDateObject($component->pivot->created_at, 'datetime') ,
-                        ]
+                        
                     ];
                 }
             }
