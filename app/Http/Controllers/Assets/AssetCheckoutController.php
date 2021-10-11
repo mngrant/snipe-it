@@ -9,8 +9,10 @@ use App\Http\Controllers\CheckInOutRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AssetCheckoutRequest;
 use App\Models\Asset;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Spatie\WebhookServer\WebhookCall;
 
 class AssetCheckoutController extends Controller
 {
@@ -82,6 +84,16 @@ class AssetCheckoutController extends Controller
             }
 
             if ($asset->checkOut($target, $admin, $checkout_at, $expected_checkin, e($request->get('note')), $request->get('name'))) {
+
+                if($target instanceof User) {
+                    $request->merge(['user_name' => $target->full_name]);
+                    WebhookCall::create()
+                        ->url(config('webhooks.hardware_checkout_webhook_url'))
+                        ->payload($request->except(['_token']))
+                        ->useSecret(config('webhooks.webhook_signature_phrase'))
+                        ->dispatch();
+                }
+
                 return redirect()->route("hardware.index")->with('success', trans('admin/hardware/message.checkout.success'));
             }
 

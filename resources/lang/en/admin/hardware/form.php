@@ -11,6 +11,7 @@ return array(
     'checkout_date'		=> 'Checkout Date',
     'checkin_date'		=> 'Checkin Date',
     'checkout_to'		=> 'Checkout to',
+    'send_notification' => 'Send user notification?',
     'cost'				=> 'Purchase Cost',
     'create'			=> 'Create Asset',
     'date'				=> 'Purchase Date',
