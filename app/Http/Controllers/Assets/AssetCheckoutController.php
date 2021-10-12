@@ -85,7 +85,7 @@ class AssetCheckoutController extends Controller
 
             if ($asset->checkOut($target, $admin, $checkout_at, $expected_checkin, e($request->get('note')), $request->get('name'))) {
 
-                if($target instanceof User) {
+                if($target instanceof User && config('webhooks.hardware_checkout_webhook_url')) {
                     $request->merge(['user_name' => $target->full_name]);
                     WebhookCall::create()
                         ->url(config('webhooks.hardware_checkout_webhook_url'))
