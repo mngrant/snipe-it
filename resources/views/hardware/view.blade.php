@@ -9,7 +9,7 @@
 {{-- Right header --}}
 @section('header_right')
 
-    
+
     @can('manage', \App\Models\Asset::class)
         @if ($asset->deleted_at=='')
         <div class="dropdown pull-right">
@@ -17,7 +17,7 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu pull-right" role="menu">
-                
+
                 @if (($asset->assetstatus) && ($asset->assetstatus->deployable=='1'))
                     @if (($asset->assigned_to != '') && ($asset->deleted_at==''))
                         @can('checkin', \App\Models\Asset::class)
@@ -136,12 +136,12 @@
                             <i class="fa fa-barcode fa-2x" aria-hidden="true"></i>
                           </span>
                           <span class="hidden-xs hidden-sm">{{ trans('general.assets') }}
-                            
+
                           </span>
                         </a>
                     </li>
 
-                
+
                     <li>
                         <a href="#history" data-toggle="tab">
                           <span class="hidden-lg hidden-md">
@@ -172,7 +172,7 @@
                         </a>
                     </li>
 
-                   
+
                     @can('update', \App\Models\Asset::class)
                         <li class="pull-right">
                             <a href="#" data-toggle="modal" data-target="#uploadFileModal">
@@ -183,7 +183,7 @@
                     @endcan
 
                 </ul>
-                
+
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="details">
                         <div class="row">
@@ -519,8 +519,11 @@
                                                     {{ trans('general.order_number') }}
                                                 </strong>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 #{{ $asset->order_number }}
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <a href="{{ config('services.search_urls.box') }}/folder/0/search?types=pdf&query={{ $asset->order_number }}" target="_blank">Search Box</a>
                                             </div>
                                         </div>
                                     @endif
@@ -809,7 +812,7 @@
                                 @if ($asset->deleted_at!='')
                                     <div class="text-center col-md-12" style="padding-bottom: 15px;">
                                         <form method="POST" action="{{ route('restore/hardware', ['assetId' => $asset->id]) }}">
-                                        @csrf 
+                                        @csrf
                                         <button class="btn btn-danger col-md-12">{{ trans('general.restore') }}</button>
                                         </form>
                                     </div>
